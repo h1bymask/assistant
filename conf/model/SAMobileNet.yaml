@@ -1,4 +1,4 @@
-__target__: core.model.ConvSelfAttentionMobileNet
+_target_: core.model.ConvSelfAttentionMobileNet
 n_classes: 4
 last_channel: 128
 model_setting: [

@@ -1,0 +1,8 @@
+pathlib==1.0.1
+librosa==0.7.1
+tqdm==4.55.1
+pandas==1.1.5
+scikit-learn==0.24.0
+crowd-kit==1.0.0 
+hydra-core
+wandb
