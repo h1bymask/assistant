@@ -1,0 +1,3 @@
+base_path:
+  __target__: pathlib.Path
+  pathsegments: /workspace/data/ready_data/info

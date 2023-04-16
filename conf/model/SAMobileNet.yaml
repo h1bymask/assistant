@@ -1,0 +1,11 @@
+__target__: core.model.ConvSelfAttentionMobileNet
+n_classes: 4
+last_channel: 128
+model_setting: [
+    # t, c, n, s
+    [1, 16, 1, 1],
+    [2, 32, 2, 2],
+    [2, 64, 6, 2],
+    [2, 128, 6, 2],
+]
+
