@@ -4,3 +4,4 @@ outputs
 data
 wandb_token.txt
 wandb
+best_model

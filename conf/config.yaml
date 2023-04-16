@@ -6,20 +6,20 @@ defaults:
 
 base_path: /workspace/data/info
 
-dataset_name: 'small' #['small', 'medium', 'large','unconfident']
+dataset_name: 'medium' #['small', 'medium', 'large','unconfident']
 train_manifest_path: ${base_path}/crowd_${dataset_name}.jsonl
 val_manifest_path: ${base_path}/test/crowd_test.jsonl
 
-batch_size: 32
+batch_size: 64
 
 best_model_folder: 'best_model'
 
 train_params:
-  num_epochs: 7
-  learning_rate: 1.e-3
-  optimizer_step: 5
-  optimizer_gamma: 2
-  weight_decay: 0
+  num_epochs: 10
+  learning_rate: 5.e-4
+  optimizer_step: 3
+  optimizer_gamma: 0.5
+  weight_decay: 1.e-5
   clip_grad: False
 
 

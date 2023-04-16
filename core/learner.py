@@ -138,7 +138,7 @@ class Learner:
                             best_WA = epoch_WA
                             best_acc = epoch_acc
                             best_f1 = epoch_f1
-
+                            best_loss = epoch_loss
                             best_epoch = epoch
                             best_model_wts = copy.deepcopy(self.model.state_dict())
 

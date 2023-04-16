@@ -36,7 +36,7 @@ def train_model(config):
             "get_train_weights",
         ],
     )
-    wandb.watch(models=model, log="all")
+    wandb.watch(models=model, log="parameters")
     train_manifest_path = Path(config.train_manifest_path)
     train_dataset = get_train_dataset(
         load_jsonl_as_df(train_manifest_path),
