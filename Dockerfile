@@ -1,6 +1,6 @@
 FROM nvidia/cuda:11.6.0-base-ubuntu18.04
 ENV DEBIAN_FRONTEND=noninteractive 
-RUN apt-get update && apt-get install -y git && \
+RUN apt-get update \
     apt install -y software-properties-common && \
     add-apt-repository ppa:deadsnakes/ppa && \
     apt install -y python3.8 && apt install -y python3-pip && \
