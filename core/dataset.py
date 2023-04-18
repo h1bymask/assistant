@@ -8,6 +8,8 @@ from torch.utils.data import Dataset, Sampler
 from torchaudio import transforms as T
 from torchvision import transforms
 
+from core import logger
+
 PATH_TO_TENSOR_COL = "tensor"
 
 
@@ -36,7 +38,7 @@ def adaptive_padding_collate_fn(batch):
     data = []
     target = []
     max_size = max([tens.shape[-1] for (tens, label) in batch])
-    for (tens, label) in batch:
+    for tens, label in batch:
         # crop
         data.append(pad_or_crop_to_shape(tens, max_size, rand_side_pad=True))
         target.append(label)
@@ -81,7 +83,7 @@ class MelEmotionsDataset(Dataset):
         if "label" in df.columns:
             df["label"] = df["label"].apply(int)
         else:
-            print('There is no column "label" in the TSV')
+            logger.warning('There is no column "label" in the TSV')
 
         if get_weights_func is None:
             df["sampling_weights"] = 1
@@ -92,7 +94,7 @@ class MelEmotionsDataset(Dataset):
         if "wav_length" in df.columns:
             df = df.sort_values("wav_length").reset_index(drop=True)
         else:
-            print('There is no column "wav_length" in the TSV')
+            logger.warning('There is no column "wav_length" in the TSV')
 
         self.df = df
         self.augm_transform = augm_transform

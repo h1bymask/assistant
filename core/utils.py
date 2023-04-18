@@ -4,7 +4,7 @@ from pathlib import Path
 import pandas as pd
 from torch.utils.data import DataLoader
 
-from core.dataset import LengthWeightedSampler, MelEmotionsDataset
+from core import LengthWeightedSampler, MelEmotionsDataset
 
 
 def parse_name(tsv_name):

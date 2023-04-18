@@ -10,7 +10,8 @@ from tqdm import tqdm
 
 import wandb
 
-from .metrics import calculate_metrics
+from core import calculate_metrics
+from core import logger
 
 
 class Learner:
@@ -24,7 +25,6 @@ class Learner:
         batch_size,
         cuda_device="cuda:0",
     ):
-
         self.device = torch.device(cuda_device if torch.cuda.is_available() else "cpu")
         self.model = model
         self.model.to(self.device)
@@ -36,7 +36,7 @@ class Learner:
         self.train_dataset = train_dataset
         self.val_dataset = val_dataset
 
-        print(
+        logger.info(
             "train labels",
             np.unique(self.train_dataset.df.label.values, return_counts=True),
         )
@@ -44,7 +44,6 @@ class Learner:
         self.dataloaders = dataloaders
 
     def train(self, num_epochs, learning_rate, optimizer_step, optimizer_gamma, weight_decay=0, clip_grad=False):
-
         criterion = nn.CrossEntropyLoss()
         optimizer = Adam(self.model.parameters(), lr=learning_rate, weight_decay=weight_decay)
         scheduler = lr_scheduler.StepLR(optimizer, step_size=optimizer_step, gamma=optimizer_gamma)
@@ -129,10 +128,10 @@ class Learner:
                             }
                         )
 
-                        print(f"{phase} Loss: {epoch_loss:.4f}")
-                        print(f"{phase} Acc: {epoch_acc:.4f}")
-                        print(f"{phase} F1 macro: {epoch_f1:.4f}")
-                        print(f"{phase} WA: {epoch_WA:.4f}")
+                        logger.info(f"{phase} Loss: {epoch_loss:.4f}")
+                        logger.info(f"{phase} Acc: {epoch_acc:.4f}")
+                        logger.info(f"{phase} F1 macro: {epoch_f1:.4f}")
+                        logger.info(f"{phase} WA: {epoch_WA:.4f}")
                         if epoch_f1 > best_f1:
                             best_f1 = epoch_f1
                             best_WA = epoch_WA
@@ -143,14 +142,14 @@ class Learner:
                             best_model_wts = copy.deepcopy(self.model.state_dict())
 
                     else:
-                        print(f"{phase} Loss: {epoch_loss:.4f}")
+                        logger.info(f"{phase} Loss: {epoch_loss:.4f}")
 
         except KeyboardInterrupt:
             pass
 
         # summary_writer.flush()
         time_elapsed = time.time() - since
-        print(
+        logger.success(
             f"Training complete in {time_elapsed // 60:.0f}m {time_elapsed % 60:.0f}s."
             + f" Best model loss: {best_loss:.6f}, best model acc: {best_acc:.6f}, "
             + f"best model f1: {best_f1:.6f},  best model WA {best_WA:.6f} best epoch {best_epoch}"

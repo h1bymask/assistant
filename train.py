@@ -9,13 +9,12 @@ from hydra.utils import instantiate
 from omegaconf import OmegaConf
 
 import wandb
-from core.learner import Learner
-from core.utils import get_train_dataloader, get_train_dataset, get_val_dataloader, get_val_dataset, load_jsonl_as_df
+from core import Learner
+from core import get_train_dataloader, get_train_dataset, get_val_dataloader, get_val_dataset, load_jsonl_as_df
 
 
 @hydra.main(config_path="conf", config_name="config")
 def train_model(config):
-
     with open("wandb_token.txt") as f:
         token = f.readline()
         wandb.login(key=token, relogin=True)

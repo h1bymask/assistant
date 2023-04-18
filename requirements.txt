@@ -6,3 +6,5 @@ scikit-learn==0.24.0
 crowd-kit==1.0.0 
 hydra-core
 wandb
+loguru
+rich
