@@ -5,8 +5,5 @@ To run experiment:
 2. Create `wand_token.txt` with your wandb token
 3. Check correct paths in `conf/config.yaml`  
 4. Create docker image `docker build -t . speech_emotion_recognition`
-4. Run training 
-    ```
-    docker run --gpus device=0 -it -v {PATH_TO_REPOSITORY}\:/workspace --rm  --name dusha_dataset speech_emotion_recognition
-    ```
+4. Run training `docker compose up --build`
 
