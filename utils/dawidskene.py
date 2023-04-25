@@ -14,9 +14,7 @@ def get_dawidskene_pred(
 ) -> List[DawidSkeneResultDataclass]:
     labels = {row.label for row in data}
     assert "task" not in labels, 'Labels cant contains the name "task"!'
-    aggregated_labels = CrowdKitDawidSkene(n_iter=n_iter).fit_predict_proba(
-        pd.DataFrame(data)
-    )
+    aggregated_labels = CrowdKitDawidSkene(n_iter=n_iter).fit_predict_proba(pd.DataFrame(data))
     aggregated_labels.to_csv(meta_path, sep="\t")
 
     aggregated_labels_list = aggregated_labels.reset_index().to_dict("records")

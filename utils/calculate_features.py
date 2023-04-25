@@ -24,9 +24,7 @@ def create_features(
     """
     if recalculate_feature:
         if len(data) != len(wavs_names):
-            print(
-                f"{len(wavs_names) - len(data)} wav files are missing for {dataset_name}"
-            )
+            print(f"{len(wavs_names) - len(data)} wav files are missing for {dataset_name}")
         hop_length = int(sample_rate * hop_length_coef)
         win_length = int(sample_rate * win_length_coef)
         for row in tqdm(data):
@@ -43,18 +41,14 @@ def create_features(
                 raise AttributeError
             mel_spec = librosa.power_to_db(spec, ref=np.max)
             np.save(features_dump_path / f"{row.wav_id}.npy", mel_spec[None])
-        print(
-            f"({len(data)}/{len(wavs_names)}) features have been calculated for {dataset_name}"
-        )
+        print(f"({len(data)}/{len(wavs_names)}) features have been calculated for {dataset_name}")
     else:
         ready_features = {elm.stem for elm in features_dump_path.glob("*.npy")}
         wav_to_features = {wav for wav in wavs_names if not wav in ready_features}
         data_to_culc = [wav for wav in data if wav.wav_id in wav_to_features]
 
         if len(data_to_culc) != len(wav_to_features):
-            print(
-                f"{len(wav_to_features) - len(data_to_culc)} wav files are missing for {dataset_name}"
-            )
+            print(f"{len(wav_to_features) - len(data_to_culc)} wav files are missing for {dataset_name}")
 
         if not data_to_culc:
             print(

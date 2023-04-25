@@ -6,6 +6,8 @@ defaults:
 
 base_path: /workspace/data/info
 
+features_folder: test_data
+
 dataset_name: 'medium' #['small', 'medium', 'large','unconfident']
 train_manifest_path: ${base_path}/crowd_${dataset_name}.jsonl
 val_manifest_path: ${base_path}/test/crowd_test.jsonl

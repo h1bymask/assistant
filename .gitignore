@@ -5,3 +5,5 @@ data
 wandb_token.txt
 wandb
 best_model
+test_data
+venv

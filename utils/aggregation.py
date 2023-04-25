@@ -38,9 +38,7 @@ class Emotion(Enum):
 def read_data_markup(dataset_path: Path, use_tsv: bool) -> List[MarkupDataclass]:
     markup_data = []
     if use_tsv:
-        with open(
-            dataset_path.parent / (dataset_path.stem + ".tsv"), "r", encoding="utf-8"
-        ) as file:
+        with open(dataset_path.parent / (dataset_path.stem + ".tsv"), "r", encoding="utf-8") as file:
             headers = file.readline().rstrip("\r\n").split("\t")
             for line in file:
                 line_data = line.strip("\r\n").split("\t")
@@ -48,49 +46,35 @@ def read_data_markup(dataset_path: Path, use_tsv: bool) -> List[MarkupDataclass]
                 row = MarkupDataclass(**string)
                 markup_data.append(row)
     else:
-        with open(
-            dataset_path.parent / (dataset_path.stem + ".jsonl"), "r", encoding="utf-8"
-        ) as file:
+        with open(dataset_path.parent / (dataset_path.stem + ".jsonl"), "r", encoding="utf-8") as file:
             for line in file:
                 row = MarkupDataclass(**json.loads(line))
                 markup_data.append(row)
     return markup_data
 
 
-def agg_data_to_file(
-    file_path: Path, agg_data: List[AggDataclass], use_tsv: bool
-) -> None:
+def agg_data_to_file(file_path: Path, agg_data: List[AggDataclass], use_tsv: bool) -> None:
     if use_tsv:
-        with open(
-            file_path.parent / (file_path.stem + ".tsv"), "w", encoding="utf-8"
-        ) as file:
+        with open(file_path.parent / (file_path.stem + ".tsv"), "w", encoding="utf-8") as file:
             print(HEADER, file=file, end=os.linesep)
             for row in agg_data:
                 print("\t".join(row.__dict__.values()), file=file, end=os.linesep)
     else:
-        with open(
-            file_path.parent / (file_path.stem + ".jsonl"), "w", encoding="utf-8"
-        ) as file:
+        with open(file_path.parent / (file_path.stem + ".jsonl"), "w", encoding="utf-8") as file:
             for row in agg_data:
                 line = json.dumps(row.__dict__, ensure_ascii=False)
                 print(line, file=file, end=os.linesep)
 
 
-def exp_data_to_file(
-    file_path: Path, exp_data: List[DataForExp], use_tsv: bool
-) -> None:
+def exp_data_to_file(file_path: Path, exp_data: List[DataForExp], use_tsv: bool) -> None:
     if use_tsv:
-        with open(
-            file_path.parent / (file_path.stem + ".tsv"), "w", encoding="utf-8"
-        ) as file:
+        with open(file_path.parent / (file_path.stem + ".tsv"), "w", encoding="utf-8") as file:
             print(HEADER_EXP, file=file, end=os.linesep)
             for row in exp_data:
                 line = "\t".join(list(map(str, row.__dict__.values())))
                 print(line, file=file, end=os.linesep)
     else:
-        with open(
-            file_path.parent / (file_path.stem + ".jsonl"), "w", encoding="utf-8"
-        ) as file:
+        with open(file_path.parent / (file_path.stem + ".jsonl"), "w", encoding="utf-8") as file:
             for row in exp_data:
                 line = json.dumps(row.__dict__, ensure_ascii=False)
                 print(line, file=file, end=os.linesep)
@@ -125,9 +109,7 @@ def filter_data(
 def make_exp_data(agg_data: List[AggDataclass]) -> List[DataForExp]:
     exp_data = []
     for row in agg_data:
-        if (
-            not isinstance(row.golden_emo, str) or row.golden_emo == ""
-        ) and row.emotion != "other":
+        if (not isinstance(row.golden_emo, str) or row.golden_emo == "") and row.emotion != "other":
             exp_row = DataForExp(
                 id=row.hash_id,
                 tensor=str(Path("..", "..", "features", row.hash_id + ".npy")),
@@ -139,9 +121,7 @@ def make_exp_data(agg_data: List[AggDataclass]) -> List[DataForExp]:
     return exp_data
 
 
-def aggregate_data(
-    data_path: Path, out_path: Path, use_tsv: bool, dawidskene_threshold: float
-) -> None:
+def aggregate_data(data_path: Path, out_path: Path, use_tsv: bool, dawidskene_threshold: float) -> None:
 
     markup_data = ["podcast_test", "podcast_train", "crowd_train", "crowd_test"]
     data = {}
