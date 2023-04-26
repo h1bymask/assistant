@@ -1,4 +1,5 @@
 from pathlib import Path
+import shutil
 
 import torch
 import numpy as np
@@ -24,6 +25,9 @@ def processing(cfg) -> None:
 
     wavs_folder = cfg.wavs_folder
     features_folder = Path(cfg.features_folder)
+    shutil.rmtree(features_folder / "features")
+    Path(features_folder/ "features").mkdir(exist_ok=True)
+
 
     wavs_names = [f for f in listdir(wavs_folder) if isfile(join(wavs_folder, f))]
     load_features(
