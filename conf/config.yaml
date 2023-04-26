@@ -4,10 +4,10 @@ defaults:
   - override hydra/hydra_logging: disabled  
   - override hydra/job_logging: disabled 
 
-base_path: /workspace/data/info
+base_path: ./data/info
 
-features_folder: test_data
-
+wavs_folder: test_data
+features_folder: ${wavs_folder}
 dataset_name: 'medium' #['small', 'medium', 'large','unconfident']
 train_manifest_path: ${base_path}/crowd_${dataset_name}.jsonl
 val_manifest_path: ${base_path}/test/crowd_test.jsonl
@@ -17,13 +17,15 @@ batch_size: 32
 best_model_folder: 'best_model'
 
 train_params:
-  num_epochs: 10
-  learning_rate: 5.e-4
-  optimizer_step: 3
-  optimizer_gamma: 0.5
-  weight_decay: 1.e-5
+  num_epochs: 25
+  learning_rate: 3.e-4
+  optimizer_step: 7
+  optimizer_gamma: 0.8
+  weight_decay: 1.e-6
   clip_grad: False
 
+
+threshold: 0.9
 
 pt_model_path:
 get_train_weights: 
