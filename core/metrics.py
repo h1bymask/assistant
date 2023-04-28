@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import accuracy_score, f1_score, recall_score, precision_score
 
 
 def get_metrics_df(pred_class, gt_class, model_name=None):
@@ -21,22 +21,20 @@ def weighted_accuracy(y_true, y_pred, n_classes=4):
     for i in range(n_classes):
         gt_class_mask = y_true == i
         pred_class_mask = y_pred == i
-        class_accuracies.append(
-            (gt_class_mask * pred_class_mask).sum() / gt_class_mask.sum()
-        )
+        class_accuracies.append((gt_class_mask * pred_class_mask).sum() / gt_class_mask.sum())
 
     return np.mean(class_accuracies)
 
 
 def calculate_metrics(pred_class, gt_class, **kwargs):
     n_classes = 4
-
     metrics_dict = {
         "accuracy": accuracy_score(y_true=gt_class, y_pred=pred_class),
-        "WA": weighted_accuracy(
-            y_true=gt_class, y_pred=pred_class, n_classes=n_classes
-        ),
+        "WA": weighted_accuracy(y_true=gt_class, y_pred=pred_class, n_classes=n_classes),
         "f1_macro": f1_score(y_true=gt_class, y_pred=pred_class, average="macro"),
+        "f1_by_class": f1_score(y_true=gt_class, y_pred=pred_class, average="samples"),
+        "recall_by_class": recall_score(y_true=gt_class, y_pred=pred_class, average="samples"),
+        "precision_by_class": precision_score(y_true=gt_class, y_pred=pred_class, average="samples"),
     }
 
     return metrics_dict

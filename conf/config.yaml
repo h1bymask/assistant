@@ -14,7 +14,7 @@ val_manifest_path: ${base_path}/test/crowd_test.jsonl
 
 batch_size: 32
 
-best_model_folder: 'best_model'
+best_model_folder: model_weights
 
 train_params:
   num_epochs: 25

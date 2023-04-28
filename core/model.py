@@ -8,7 +8,7 @@ from torchvision.models.mobilenetv2 import (ConvBNReLU, InvertedResidual,
 AUDIO_PROBAS = ("audio_neg", "audio_sad", "audio_neu", "audio_pos")
 AUDIO_COLS = tuple(["audio_pred"] + list(AUDIO_PROBAS))
 
-EMO2LABEL = {"angry": 0, "sad": 1, "neutral": 2, "positive": 3}
+LABEL2EMO = {0:"angry", 1:"sad", 2:"neutral", 3:"positive"}
 
 
 class SoftMaxModel(nn.Module):

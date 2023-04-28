@@ -12,6 +12,7 @@ import wandb
 
 from core import calculate_metrics
 from core import logger
+from core.model import LABEL2EMO
 
 
 class Learner:
@@ -127,6 +128,14 @@ class Learner:
                                 "epoch": epoch,
                             }
                         )
+                        for i in range(len(LABEL2EMO.keys())):
+                            wandb.log(
+                                {
+                                    f"RECALL/{LABEL2EMO[i]}": metric_dict["recall_by_class"][i],
+                                    f"F1_SCORE/{LABEL2EMO[i]}": metric_dict["f1_by_class"][i],
+                                    f"PRECISION/{LABEL2EMO[i]}": metric_dict["precision_by_class"][i],
+                                }
+                            )
 
                         logger.info(f"{phase} Loss: {epoch_loss:.4f}")
                         logger.info(f"{phase} Acc: {epoch_acc:.4f}")

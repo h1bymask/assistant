@@ -10,6 +10,7 @@ import hydra
 from os import listdir
 from hydra.utils import instantiate
 from os.path import isfile, join
+from core.model import LABEL2EMO
 
 
 @hydra.main(config_path="conf", config_name="config")
@@ -26,8 +27,7 @@ def processing(cfg) -> None:
     wavs_folder = cfg.wavs_folder
     features_folder = Path(cfg.features_folder)
     shutil.rmtree(features_folder / "features")
-    Path(features_folder/ "features").mkdir(exist_ok=True)
-
+    Path(features_folder / "features").mkdir(exist_ok=True)
 
     wavs_names = [f for f in listdir(wavs_folder) if isfile(join(wavs_folder, f))]
     load_features(
@@ -37,21 +37,29 @@ def processing(cfg) -> None:
         dataset_name="inference data",
         recalculate_feature=True,
     )
-    
-    labels = {0:'angry',1:'sad',2:'neutral',3:'happy'}
+
     names_to_id = {}
     test_samples = []
-    for idx,file in enumerate((Path(features_folder) / "features").glob("*")):
+    for idx, file in enumerate((Path(features_folder) / "features").glob("*")):
         test_samples.append(np.load(file))
         names_to_id[idx] = file.stem
     model = instantiate(cfg.model)
-    model.load_state_dict(torch.load(cfg.best_model_folder + "/" + cfg.model["_target_"].split(".")[-1]))
+    map_location = "cuda" if torch.cuda.is_available() else "cpu"
+    model.load_state_dict(
+        torch.load(
+            cfg.best_model_folder + "/" + cfg.model["_target_"].split(".")[-1] + ".pt",
+            map_location=torch.device(map_location),
+        )
+    )
     model.eval()
     with torch.no_grad():
         for idx, feature in enumerate(test_samples):
-            output_label = torch.argmax(model(torch.tensor(feature[None, :]))).item()
-            print(f'file {names_to_id[idx]}: prediction: {labels[output_label]}')
-        
+            prediction = torch.nn.functional.softmax(model(torch.tensor(feature[None, :])))[0]
+            output_label = torch.argmax(prediction).item()
+            print(
+                f"file {names_to_id[idx]}: prediction: {LABEL2EMO[output_label]} probability: {prediction[output_label]:.4f} ({prediction})"
+            )
+
 
 if __name__ == "__main__":
     processing()  # pylint: disable=no-value-for-parameter
