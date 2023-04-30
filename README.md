@@ -1,5 +1,5 @@
 # Speech Emotion Recognition
-[wandb](https://wandb.ai/motley-crew/speech-emotion-recognition?workspace=user-deethereal)  
+[wandb](https://wandb.ai/deethereal/speech-emotion-recognition)  
 ## To run training or inference:
 ### Common:
   2. Create docker image `docker build -t . speech_emotion_recognition`
