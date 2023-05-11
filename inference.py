@@ -11,7 +11,8 @@ from os import listdir
 from hydra.utils import instantiate
 from os.path import isfile, join
 from core.model import LABEL2EMO
-
+from rich.console import Console
+console = Console()
 
 @hydra.main(config_path="conf", config_name="config")
 def processing(cfg) -> None:
@@ -56,8 +57,8 @@ def processing(cfg) -> None:
         for idx, feature in enumerate(test_samples):
             prediction = torch.nn.functional.softmax(model(torch.tensor(feature[None, :])))[0]
             output_label = torch.argmax(prediction).item()
-            print(
-                f"file {names_to_id[idx]}: prediction: {LABEL2EMO[output_label]} probability: {prediction[output_label]:.4f} ({prediction})"
+            console.print(
+                f"file [green]{names_to_id[idx]}[/green]: prediction: [red]{LABEL2EMO[output_label]}[/red] probability: {prediction[output_label]:.4f} ({prediction})"
             )
 
 

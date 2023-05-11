@@ -10,3 +10,4 @@ hydra-core
 wandb
 loguru
 rich
+jsonlines

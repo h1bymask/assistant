@@ -32,9 +32,9 @@ def calculate_metrics(pred_class, gt_class, **kwargs):
         "accuracy": accuracy_score(y_true=gt_class, y_pred=pred_class),
         "WA": weighted_accuracy(y_true=gt_class, y_pred=pred_class, n_classes=n_classes),
         "f1_macro": f1_score(y_true=gt_class, y_pred=pred_class, average="macro"),
-        "f1_by_class": f1_score(y_true=gt_class, y_pred=pred_class, average="samples"),
-        "recall_by_class": recall_score(y_true=gt_class, y_pred=pred_class, average="samples"),
-        "precision_by_class": precision_score(y_true=gt_class, y_pred=pred_class, average="samples"),
+        "f1_by_class": f1_score(y_true=gt_class, y_pred=pred_class, average=None),
+        "recall_by_class": recall_score(y_true=gt_class, y_pred=pred_class, average=None),
+        "precision_by_class": precision_score(y_true=gt_class, y_pred=pred_class, average=None),
     }
 
     return metrics_dict
