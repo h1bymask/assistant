@@ -129,6 +129,7 @@ def get_train_dataloader(train_ds, batch_size, collate_fn):
         batch_size=batch_size,
         num_workers=2,
         collate_fn=collate_fn,
+        pin_memory=True,
         sampler=LengthWeightedSampler(
             df=train_ds.df, batch_size=batch_size, min_length=0.3, max_length=16, length_delta=0.3, decimals=1
         ),
@@ -136,4 +137,4 @@ def get_train_dataloader(train_ds, batch_size, collate_fn):
 
 
 def get_val_dataloader(val_ds, batch_size, collate_fn):
-    return DataLoader(val_ds, batch_size=batch_size, collate_fn=collate_fn, num_workers=2, shuffle=False)
+    return DataLoader(val_ds, batch_size=batch_size, collate_fn=collate_fn, pin_memory=True, num_workers=2, shuffle=False)

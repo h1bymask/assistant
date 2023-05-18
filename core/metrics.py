@@ -27,7 +27,7 @@ def weighted_accuracy(y_true, y_pred, n_classes=4):
 
 
 def calculate_metrics(pred_class, gt_class, **kwargs):
-    n_classes = 4
+    n_classes = 5
     metrics_dict = {
         "accuracy": accuracy_score(y_true=gt_class, y_pred=pred_class),
         "WA": weighted_accuracy(y_true=gt_class, y_pred=pred_class, n_classes=n_classes),

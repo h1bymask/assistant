@@ -37,10 +37,7 @@ class Learner:
         self.train_dataset = train_dataset
         self.val_dataset = val_dataset
 
-        logger.info(
-            "train labels",
-            np.unique(self.train_dataset.df.label.values, return_counts=True),
-        )
+        logger.info(f"train labels{np.unique(self.train_dataset.df.label.values, return_counts=True)}")
 
         self.dataloaders = dataloaders
 

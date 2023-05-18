@@ -1,34 +1,32 @@
 defaults:
   - _self_
   - model: SAMobileNet
-  - override hydra/hydra_logging: disabled  
-  - override hydra/job_logging: disabled 
+  - override hydra/hydra_logging: disabled
+  - override hydra/job_logging: disabled
 
 base_path: ./data/info
 
 wavs_folder: test_data
 features_folder: ${wavs_folder}
-dataset_name: 'medium' #['small', 'medium', 'large','unconfident']
-train_manifest_path: ${base_path}/crowd_${dataset_name}.jsonl
-val_manifest_path: ${base_path}/test/crowd_test.jsonl
+train_manifest_path: ${base_path}/kursa4_data_large.jsonl
+val_manifest_path: ${base_path}/test/kursa4_test.jsonl
 
-batch_size: 32
+batch_size: 50
 
-best_model_folder: model_weights
+best_model_folder: best_model
 
 train_params:
-  num_epochs: 25
+  num_epochs: 41
   learning_rate: 3.e-4
-  optimizer_step: 7
-  optimizer_gamma: 0.8
-  weight_decay: 1.e-6
+  optimizer_step: 10
+  optimizer_gamma: 0.5
+  weight_decay: 0
   clip_grad: False
-
 
 threshold: 0.9
 
 pt_model_path:
-get_train_weights: 
+get_train_weights:
 
 collate_fn:
   _target_: core.dataset.adaptive_padding_collate_fn
@@ -39,7 +37,7 @@ augm_func:
   freq_mask_param: 16
   crop_augm_max_cut_size: 40
 
-hydra:  
-  output_subdir: null  
-  run:  
+hydra:
+  output_subdir: null
+  run:
     dir: .

@@ -41,7 +41,7 @@ def create_features(
                 raise AttributeError
             mel_spec = librosa.power_to_db(spec, ref=np.max)
             np.save(features_dump_path / f"{row.wav_id}.npy", mel_spec[None])
-        print(f"({len(data)}/{len(wavs_names)}) features have been calculated for {dataset_name}")
+        # print(f"({len(data)}/{len(wavs_names)}) features have been calculated for {dataset_name}")
     else:
         ready_features = {elm.stem for elm in features_dump_path.glob("*.npy")}
         wav_to_features = {wav for wav in wavs_names if not wav in ready_features}
@@ -84,10 +84,11 @@ def load_features(
     wavs = []
     for elm in wavs_path.glob("*.wav"):
         wavs.append(DataWithFeaturesEntryclass(wav_path=str(elm), wav_id=elm.stem))
+    print(len(wavs))
     create_features(
         data=wavs,
         wavs_names=wavs_names,
-        features_dump_path=result_dir / "features",
+        features_dump_path=result_dir,
         dataset_name=dataset_name,
         recalculate_feature=recalculate_feature,
     )

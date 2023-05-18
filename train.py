@@ -53,7 +53,7 @@ def train_model(config):
         ),
         "val": get_val_dataloader(
             val_ds=val_dataset,
-            batch_size=config.batch_size,
+            batch_size=3*config.batch_size,
             collate_fn=instantiate(config.collate_fn, _partial_=True),
         ),
     }
@@ -83,11 +83,11 @@ def train_model(config):
 
 
 if __name__ == "__main__":
-    # fix seeds for reproducibility
-    torch.manual_seed(0)
-    random.seed(0)
-    np.random.seed(0)
-    torch.backends.cudnn.benchmark = False
-    torch.use_deterministic_algorithms(True)
+    # # fix seeds for reproducibility
+    # torch.manual_seed(0)
+    # random.seed(0)
+    # np.random.seed(0)
+    # torch.backends.cudnn.benchmark = False
+    # torch.use_deterministic_algorithms(True)
 
     train_model()

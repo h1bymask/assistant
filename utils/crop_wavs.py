@@ -5,7 +5,7 @@ import jsonlines
 import os
 
 from pathlib import Path
-def crop_wav(originalWavPath, folder_for_wavs, train_jsonl, test_jsonl, min_len=3, max_len=8, ):
+def crop_wav(originalWavPath, folder_for_wavs, train_jsonl, test_jsonl, min_len=3, max_len=8, test_size=0.2 ):
     total_length = librosa.get_duration(filename=originalWavPath)
     sampleRate, waveData = wavfile.read( originalWavPath )
     cur_ts = 0
@@ -20,9 +20,8 @@ def crop_wav(originalWavPath, folder_for_wavs, train_jsonl, test_jsonl, min_len=
                 pth = Path(originalWavPath)
                 file_name= pth.parent.stem + '_' + pth.stem + f"_{cntr_}"
                 wavfile.write(f"{folder_for_wavs}\\{file_name}.wav", sampleRate, waveData[startSample:endSample])
-                if np.random.rand()<=0.2:
-                    test_writer.write({'id':file_name,'tensor':f"../features/{file_name}.npy", 'wav_length':tmp_size,"label":4,'emotion':'silence'})
-
+                if np.random.rand()<=test_size:
+                    test_writer.write({'id':file_name,'tensor':f"../../features/{file_name}.npy", 'wav_length':tmp_size,"label":4,'emotion':'silence'})
                 else:    
                     train_writer.write({'id':file_name,'tensor':f"../features/{file_name}.npy", 'wav_length':tmp_size,"label":4,'emotion':'silence'})
 
@@ -30,16 +29,3 @@ def crop_wav(originalWavPath, folder_for_wavs, train_jsonl, test_jsonl, min_len=
                 cur_ts+=tmp_size
             else:
                 break
-
-if __name__ == '__main__':
-    for folder in os.listdir('D:\\trash\\demand\\'):
-        for file in os.listdir('D:\\trash\\demand\\'+folder):
-            crop_wav('D:\\trash\\demand\\'+folder+'\\'+file, 
-                    test_jsonl='data\\info\\test\\kursa4_test.jsonl',
-                    train_jsonl='data\\info\\kursa4_data.jsonl',
-                    folder_for_wavs='E:\\kursa4\\speech-emotion-recognition\\data\\silence_wavs',
-                    min_len=np.random.randint(2,5),
-                    max_len=np.random.randint(7,11)
-                    )
-
-        
