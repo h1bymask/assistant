@@ -26,7 +26,7 @@ def weighted_accuracy(y_true, y_pred, n_classes=4):
     return np.mean(class_accuracies)
 
 
-def calculate_metrics(pred_class, gt_class, **kwargs):
+def calculate_metrics(gt_class, pred_class, **kwargs):
     n_classes = 5
     metrics_dict = {
         "accuracy": accuracy_score(y_true=gt_class, y_pred=pred_class),

@@ -10,10 +10,9 @@ from tqdm import tqdm
 
 import wandb
 
-from core import calculate_metrics
-from core import logger
+from core import calculate_metrics, logger
+from core.focalloss import FocalLoss
 from core.model import LABEL2EMO
-
 
 class Learner:
     def __init__(
@@ -21,7 +20,6 @@ class Learner:
         train_dataset,
         val_dataset,
         dataloaders,
-        model_name,
         model,
         batch_size,
         cuda_device="cuda:0",
@@ -30,7 +28,6 @@ class Learner:
         self.model = model
         self.model.to(self.device)
 
-        self.__model_name = model_name
 
         self.batch_size = batch_size
 
@@ -41,9 +38,13 @@ class Learner:
 
         self.dataloaders = dataloaders
 
-    def train(self, num_epochs, learning_rate, optimizer_step, optimizer_gamma, weight_decay=0, clip_grad=False):
-        criterion = nn.CrossEntropyLoss()
-        optimizer = Adam(self.model.parameters(), lr=learning_rate, weight_decay=weight_decay)
+    def train(self, num_epochs, learning_rate, optimizer_step, optimizer_gamma, weight_decay=0, clip_grad=False, loss_type='ce', **kwargs):
+        if loss_type=='ce':
+            criterion = nn.CrossEntropyLoss()
+        elif loss_type == 'focal':
+            criterion = FocalLoss(**kwargs)
+            
+        optimizer = Adam(self.model.parameters(), lr=learning_rate, weight_decay=weight_decay) 
         scheduler = lr_scheduler.StepLR(optimizer, step_size=optimizer_step, gamma=optimizer_gamma)
 
         since = time.time()
@@ -88,6 +89,7 @@ class Learner:
                                     torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
                                 optimizer.step()
                             wandb.log({f"BATCH/{phase}_loss": loss.item(), f"BATCH/{phase}_iter": iters[phase]})
+                            
 
                         running_loss += loss.detach().item()
                         if phase == "val":
@@ -119,9 +121,9 @@ class Learner:
                         epoch_WA = metric_dict["WA"]
                         wandb.log(
                             {
-                                "EPOCH/accuracy": epoch_acc,
-                                "EPOCH/F1": epoch_f1,
-                                "EPOCH/W_Accuracy": epoch_WA,
+                                "EPOCH/accuracy": metric_dict["accuracy"],
+                                "EPOCH/F1-macro": metric_dict["f1_macro"],
+                                "EPOCH/W_Accuracy": metric_dict["WA"],
                                 "epoch": epoch,
                             }
                         )
@@ -142,7 +144,6 @@ class Learner:
                             best_f1 = epoch_f1
                             best_WA = epoch_WA
                             best_acc = epoch_acc
-                            best_f1 = epoch_f1
                             best_loss = epoch_loss
                             best_epoch = epoch
                             best_model_wts = copy.deepcopy(self.model.state_dict())
@@ -163,4 +164,3 @@ class Learner:
 
         self.model.load_state_dict(best_model_wts)
         self.model.eval()
-        return best_model_wts

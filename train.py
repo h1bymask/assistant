@@ -67,13 +67,14 @@ def train_model(config):
         train_dataset=train_dataset,
         val_dataset=val_dataset,
         dataloaders=dataloaders,
-        model_name=model_name,
-        model=model,
+        model=model, 
         batch_size=config.batch_size,
     )
 
     # train
-    best_model_wts = learner.train(**config.train_params)
+    _, counts = np.unique(train_dataset.df.label.values, return_counts=True)
+    class_weights = torch.FloatTensor(counts/sum(counts)).to(learner.device)
+    best_model_wts = learner.train(**config.train_params, loss_type='focal', alpha=0.1/class_weights, gamma=2)
 
     # dump best model
     model_folder = Path(config.best_model_folder)

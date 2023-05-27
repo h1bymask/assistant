@@ -16,10 +16,10 @@ batch_size: 50
 best_model_folder: best_model
 
 train_params:
-  num_epochs: 41
+  num_epochs: 42
   learning_rate: 3.e-4
-  optimizer_step: 10
-  optimizer_gamma: 0.5
+  optimizer_step: 5
+  optimizer_gamma: 0.7
   weight_decay: 0
   clip_grad: False
 
