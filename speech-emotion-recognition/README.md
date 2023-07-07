@@ -12,9 +12,9 @@
     - Create docker image:
      `docker build -t . speech_emotion_recognition`
     - Run container:
-            * `docker compose up --build`   
-            or
-            * `docker run -it -v {cur_dir}:/workspace --rm  --name dusha_docker speech_emotion_recognition` (preferred)
+        * `docker compose up --build`   
+        or
+        * `docker run -it -v {cur_dir}:/workspace --rm  --name dusha_docker speech_emotion_recognition` (preferred)
 
 ### Training
 1. Download features from [DUSHA](https://github.com/salute-developers/golos/tree/master/dusha#downloads) to the current directory
