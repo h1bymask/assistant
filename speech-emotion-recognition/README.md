@@ -1,5 +1,5 @@
 # Speech Emotion Recognition
-[github/deethereal](https://github.com/deethereal/speech-emotion-recognition)'s coursework 2023
+[github/deethereal](https://github.com/deethereal/speech-emotion-recognition)'s MSUFSR coursework
 <br/>
 [wandb](https://wandb.ai/deethereal/speech-emotion-recognition)  
 <br/>
