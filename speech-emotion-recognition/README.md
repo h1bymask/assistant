@@ -5,16 +5,16 @@
 <br/>
 ## To run training or inference:
 ### Common:
-1 Virtual environment
-1.1 python3 -m venv venv/
-1.2 venv/python -m pip install -r requirements.txt
-</br/>
-2 Docker
-2.1 Create docker image `docker build -t . speech_emotion_recognition`
-2.2 Run container:
-    * `docker compose up --build`   
-    or
-    * `docker run -it -v {cur_dir}:/workspace --rm  --name dusha_docker speech_emotion_recognition` (preferred)
+1. Virtual environment
+    - python3 -m venv venv/
+    - venv/python -m pip install -r requirements.txt
+2. Docker
+    - Create docker image:
+     `docker build -t . speech_emotion_recognition`
+    - Run container:
+            * `docker compose up --build`   
+            or
+            * `docker run -it -v {cur_dir}:/workspace --rm  --name dusha_docker speech_emotion_recognition` (preferred)
 
 ### Training
 1. Download features from [DUSHA](https://github.com/salute-developers/golos/tree/master/dusha#downloads) to the current directory
