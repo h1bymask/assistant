@@ -1,6 +1,8 @@
 # Speech Emotion Recognition
-[github](github.com/deethereal/speech-emotion-recognition)
+[github/deethereal](https://github.com/deethereal/speech-emotion-recognition)'s coursework 2023
+<br/>
 [wandb](https://wandb.ai/deethereal/speech-emotion-recognition)  
+<br/>
 ## To run training or inference:
 ### Common:
   2. Create docker image `docker build -t . speech_emotion_recognition`
