@@ -5,8 +5,13 @@
 <br/>
 ## To run training or inference:
 ### Common:
-  2. Create docker image `docker build -t . speech_emotion_recognition`
-3. Run container:
+1 Virtual environment
+1.1 python3 -m venv venv/
+1.2 venv/python -m pip install -r requirements.txt
+</br/>
+2 Docker
+2.1 Create docker image `docker build -t . speech_emotion_recognition`
+2.2 Run container:
     * `docker compose up --build`   
     or
     * `docker run -it -v {cur_dir}:/workspace --rm  --name dusha_docker speech_emotion_recognition` (preferred)
