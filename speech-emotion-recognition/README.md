@@ -1,4 +1,5 @@
 # Speech Emotion Recognition
+[github](github.com/deethereal/speech-emotion-recognition)
 [wandb](https://wandb.ai/deethereal/speech-emotion-recognition)  
 ## To run training or inference:
 ### Common:
