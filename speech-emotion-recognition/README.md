@@ -1,5 +1,5 @@
 # Speech Emotion Recognition
-[github/deethereal](https://github.com/deethereal/speech-emotion-recognition)'s MSU&zwsp;FSR coursework
+[github/deethereal](https://github.com/deethereal/speech-emotion-recognition)'s MSU&#8203;FSR coursework
 <br/>
 [wandb](https://wandb.ai/deethereal/speech-emotion-recognition)  
 <br/>
