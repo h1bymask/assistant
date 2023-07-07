@@ -1,0 +1,13 @@
+services:
+  run_app:
+    container_name: dusha_dataset
+    image: speech_emotion_recognition
+    volumes:
+      - ./:/workspace
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
