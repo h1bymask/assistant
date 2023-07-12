@@ -9,8 +9,8 @@ from torch.nn.functional import softmax
 import pickle
 
 
-# 2) Все знаки должны стоять отдельно друг от друга !!!
-# Первая фраза ('Как слышите меня?', 'Слышу хорошо .'),
+# Все знаки должны стоять отдельно друг от друга !!!
+# Первая фраза ('Слышу хорошо .'),
 frase_array = [('Как слышите меня ? ','Вас слышу хорошо . '),
 ('Приступайте к проверке скафандра . Как поняли меня ? ',
  'Вас понял : приступать к проверке скафандра . Через 3 минуты . Сейчас занят .'),
@@ -174,6 +174,14 @@ stop_words = stopwords.words('russian')
 marks = ['!', '.', '?', ',', '«', '»', '&', '#', '№',  '0', '-' , '1'
         ,'2', '3', '4', '5', '6', '7', '8', '9', '10', '15', '20', '50', '100', '150']
 
+# Векторизация
+main_arr = []
+for text in frase_array:
+    phrase = text[0]
+    phrase_emb = np.asarray([navec[word] for word in phrase.lower().split()
+                             if (word in navec) and (word not in marks)]).mean(axis=0)
+    main_arr.append(phrase_emb)
+
 # Начало диалога
 print('Для завершения программы воспользуйтесь комбинацией клавиш:'
       '\n - Ctrl + F2 (Pycharm);'
@@ -186,6 +194,7 @@ phrase1_input = input('- ЦУП: \n')
 
 try:
     while True:
+
         # Определение эмоций
         phrase_input = input(f' - ЦУП: \n ')
         tokens = tokenizer(phrase_input, return_tensors='pt')
@@ -197,21 +206,21 @@ try:
 
         # NLP
         phrase_input_emb = np.asarray([navec[word] for word in phrase_input.lower().split()
-                                 if (word in navec) and (word not in stop_words) and (word not in marks)]).mean(axis=0)
+                                 if (word in navec) and (word not in marks)])
+        if phrase_input_emb.size != 0:
+            phrase_input_emb = phrase_input_emb.mean(axis=0)
+        else:
+            print('- Гагарин: \nВас не понял. (Без эмоций)')
 
         # Поиск расстояния
-        main_arr = []
-        for text in frase_array:
-            phrase = text[0]
-            phrase_emb = np.asarray([navec[word] for word in phrase.lower().split()
-                                     if (word in navec) and (word not in marks)]).mean(axis=0)
-            main_arr.append(phrase_emb)
-
-
         cosine_arr = [distance.cosine(phrase_emb, phrase_input_emb) for phrase_emb in main_arr]
         cosine_min = min(cosine_arr)
-        index = cosine_arr.index(cosine_min)
-        print(f'- Гагарин: \n{frase_array[index][1]} ({output_emotion[index]})')
+        if cosine_min < 0.2:
+            index = cosine_arr.index(cosine_min)
+            print(f'- Гагарин: \n{frase_array[index][1]} ({output_emotion[index]})')
+        else:
+            print('- Гагарин: \nВас не понял. (Без эмоций)')
+
 
 except KeyboardInterrupt:
     print('Программа завершена.')
