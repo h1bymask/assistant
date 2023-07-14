@@ -1,4 +1,7 @@
 import sys
+import json
+from itertools import count
+z = 1
 for a in sys.stdin:
     punc = '''!()-—[] {};:'"\,<>./?@#$%^&*_№~«»\n\r'''
     for ele in a:
@@ -7,140 +10,151 @@ for a in sys.stdin:
     a = a.lower()
     #print(a)
     if a==('васслышухорошо'):
-        print('1.Vas_slishu_horosho')
+        v = ('1.Vas_slishu_horosho.mp4')
     elif a==('васпонялприступатькпроверкескафандрачерез3минутысейчасзанят'):
-        print('2.Vas_Ponyal.Pristupat_k_proverke')
+        v = ('2.Vas_Ponyal.Pristupat_k_proverke.mp4')
     elif a==('проверкускафандразакончил'):
-        print('3.Proverku_skafandra_zakonchil')
+        v = ('3.Proverku_skafandra_zakonchil.mp4')
     elif a==('какменяслышите'):
-        print('4.Kak_manya_slishite')
+        v = ('4.Kak_manya_slishite.mp4')
     elif a==('васслышуоченьслабоуменягоритсветозвуковаяпередачанадоскеочевиднопроисходитсписываниесмагнитофонакакменяпоняли'):
-        print('5.Vas_slishu_ochen_slabo')
+        v = ('5.Vas_slishu_ochen_slabo.mp4')
     elif a==('васнепонялвыключитепожалуйстамузыкуеслиможно'):
-        print('6.Vas_ne_ponyal.Vikluchite_muziku')
+        v = ('6.Vas_ne_ponyal.Vikluchite_muziku.mp4')
     elif a==('всёсделанослышувасхорошо'):
-        print('7.Vse_sdelano_slishu_vas_horosho')
+        v = ('7.Vse_sdelano_slishu_vas_horosho.mp4')
     elif a==('работаюнадэмшдэмшдинамическийэлектромагнитныймикрофоншлемадаюсчет12345678910'):
-        print('8.Rabotau_na_DEMSH')
+        v = ('8.Rabotau_na_DEMSH.mp4')
     elif a==('васпонялпроверкасвязи12345678910какслышите'):
-        print('9.Vas_ponyal_proverka_svayzi')
+        v = ('9.Vas_ponyal_proverka_svayzi.mp4')
     elif a==('работаюнамагнитофоне12345678910васслышухорошоработаюнадэмш12345678910какпоняли'):
-        print('10.Rabotayu_na_magnitofone')
+        v = ('10.Rabotayu_na_magnitofone.mp4')
     elif a==('приёмнателефон'):
-        print('11.Priem_na_telefon')
+        v = ('11.Priem_na_telefon.mp4')
     elif a==('чувствуюсебяпревосходнопроверкателефоновидинамиковнормальноперехожунателефон'):
-        print('12.Chuvstvuyu_sebya_prevoshodno')
+        v = ('12.Chuvstvuyu_sebya_prevoshodno.mp4')
     elif a==('понялятакизнал'):
-        print('13.Ponyal.Ya_tak_i_znal')
+        v = ('13.Ponyal.Ya_tak_i_znal.mp4')
     elif a==('понялвассовершенноспокоен'):
-        print('14.Ponyal_vas.Sovershenno_spokoen')
+        v = ('14.Ponyal_vas.Sovershenno_spokoen.mp4')
     elif a==('неслышалвёлвстречнуюпередачувсёвпорядкеговоритекакпоняли'):
-        print('15.Ne_slishal.Vel_vstrechnuyu')
+        v = ('15.Ne_slishal.Vel_vstrechnuyu.mp4')
     elif a==('какучилисмех'):
-        print('16.Kak_uchili.Ha_ha_ha')
+        v = ('16.Kak_uchili.Ha_ha_ha.mp4')
     elif a==('понялландышсмехландышемназванкосмонавтпоповичпр'):
-        print('17.Ponyal_landyish')
+        v = ('17.Ponyal_landyish.mp4')
     elif a==('васпонялсейчасвашезаданиевыполню'):
-        print('18.Vas_ponyal.Seychas_vashe_zadanie')
+        v = ('18.Vas_ponyal.Seychas_vashe_zadanie.mp4')
     elif a==('понялвасстартовоеположениеиприработенаорбитетумблернателеграфеиназареприразделениитумблернасигнал'):
-        print('19.Ponyal_vas.Startovoe_polozhenie')
+        v = ('19.Ponyal_vas.Startovoe_polozhenie.mp4')
     elif a==('слышувасхорошокакменя'):
-        print('20.Slishu_vas_horosho')
+        v = ('20.Slishu_vas_horosho.mp4')
     elif a==('конечнояработойнеоченьзанят'):
-        print('21.Konechno')
+        v = ('21.Konechno.mp4')
     elif a==('понялпонялпродолжай'):
-        print('22.Ponyal_prodolzhai')
+        v = ('22.Ponyal_prodolzhai.mp4')
     elif a==('васпонялуменятожеидётвсехорошосамочувствиехорошеесейчасбудутзакрыватьлюк1'):
-        print('23.Luk№1')
+        v = ('23.Luk1.mp4')
     elif a==('васслышухорошонемножкопотишеговоритекакпоняли'):
-        print('24.Potishe')
+        v = ('24.Potishe.mp4')
     elif a==('сейчасработалкнопкойнапультесейчасработаюкнопкойнаручкеуправленияработалсобеихкнопоквыслышитехорошокакпоняли'):
-        print('25.Rabotal_na_pulte')
+        v = ('25.Rabotal_na_pulte.mp4')
     elif a==('понялвасправильнопроверяюпользованиепамяткойивозможностьсчитываниясигналовпроверилвсёнормально'):
-        print('26.Pamyatka')
+        v = ('26.Pamyatka.mp4')
     elif a==('понялвасбольшоеспасибопередайтеимсамыйгорячийотменя'):
-        print('27.Goryachii')
+        v = ('27.Goryachii.mp4')
     elif a==('понялподготовкаизделиянормальноуменятожесамочувствиеинастроениенормальнокстартуготов'):
-        print('28.Podgotovka_izdeliya')
+        v = ('28.Podgotovka_izdeliya.mp4')
     elif a==('слышувасхорошознаюскемразговариваю'):
-        print('29.Znayu_s_kem_razgovarivayu')
+        v = ('29.Znayu_s_kem_razgovarivayu.mp4')
     elif a==('понялтакяидумал'):
-        print('30.Tak_i_dumal')
+        v = ('30.Tak_i_dumal.mp4')
     elif a==('прошудвадцатогонасвязьдвадцатыйкоролёв'):
-        print('31.Proshu_dvadcatogo')
+        v = ('31.Proshu_dvadcatogo.mp4')
     elif a==('прошупринадёжнойсвязинаактивномучасткесообщитьвремяпозжеилираньшедосекундыстартаеслитаковоебудет'):
-        print('32.Pri_nadezhnoi_svayzi')
+        v = ('32.Pri_nadezhnoi_svayzi.mp4')
     elif a==('понялвасправильнолюкоткрытпроверяютсигнализаторы'):
-        print('33.Luk_otkrit')
+        v = ('33.Luk_otkrit.mp4')
     elif a==('работаюнадэмш'):
-        print('34.Rabotayu_na_demsh')
+        v = ('34.Rabotayu_na_demsh.mp4')
     elif a==('васслышухорошокакменя'):
-        print('20.Slishu_vas_horosho')
+        v = ('20.Slishu_vas_horosho.mp4')
     elif a==('пакетпроверилдотянутьсялегкосвободнокакпоняли'):
-        print('35.Paket_proveril')
+        v = ('35.Paket_proveril.mp4')
     elif a==('уходаэтихвагоновнеслышубольношумбольшойслышувастолько'):
-        print('36.Vagonyi')
+        v = ('36.Vagonyi.mp4')
     elif a==('васпонялобъявлена50минутнаяготовность'):
-        print('37.50minut')
+        v = ('37.50minut.mp4')
     elif a==('васслышухорошокрышкуужеочевиднокончаютзаворачивать'):
-        print('38.Krishka')
+        v = ('38.Krishka.mp4')
     elif a==('уменятожевсёхорошосамочувствиехорошеенастроениебодрое'):
-        print('39.U_menya_vse_horosho')
+        v = ('39.U_menya_vse_horosho.mp4')
     elif a==('понялвас'):
-        print('40.Ponyal_vas')
+        v = ('40.Ponyal_vas.mp4')
     elif a==('еслиестьмузычкаможнонемножкопустить'):
-        print('41.Muzichka')
+        v = ('41.Muzichka.mp4')
     elif a==('васпонялопускаютплощадкиобслуживаниянояшуманеслышунекоторыеколебанияощущаю'):
-        print('42.Ploshadki')
+        v = ('42.Ploshadki.mp4')
     elif a==('покамузыкинетнонадеюсьсейчасбудет'):
-        print('43.Muziki_net')
+        v = ('43.Muziki_net.mp4')
     elif a==('поканедали'):
-        print('44.Poka_ne_dali')
+        v = ('44.Poka_ne_dali.mp4')
     elif a==('далипролюбовь'):
-        print('45.Dali_pro_lyubov')
+        v = ('45.Dali_pro_lyubov.mp4')
     elif a==('музыкудаливсёхорошо'):
-        print('46.Muziku_dali')
+        v = ('46.Muziku_dali.mp4')
     elif a==('понялсердечныйприветимслушаюутесоваотдушиландыши'):
-        print('47.Serdechniy_privet')
+        v = ('47.Serdechniy_privet.mp4')
     elif a==('васпонялгерметичностьвпорядкеслышуинаблюдаюгерметичностьпроверилионичтототампостукиваютнемножко'):
-        print('48.Germetichnost')
+        v = ('48.Germetichnost.mp4')
     elif a==('васслышухорошосамочувствиехорошеенастроениебодроекстартуготов'):
-        print('49.K_startu_gotov')
+        v = ('49.K_startu_gotov.mp4')
     elif a==('хорошопролюбовьпоюттам'):
-        print('50.Pro_lubov_pout')
+        v = ('50.Pro_lubov_pout.mp4')
     elif a==('васпонялуменятожевсёхорошоспокоенсамочувствиехорошееприветребятамвсёвремячувствуюиххорошуюдружескуюподдержкуонивместесомной'):
-        print('51.Druzheskaya_podderzhka')
+        v = ('51.Druzheskaya_podderzhka.mp4')
     elif a==('понялбольшоеспасибосердечноеспасибо'):
-        print('52.Serdechnoe_spasibo')
+        v = ('52.Serdechnoe_spasibo.mp4')
     elif a==('доложилиправильносамочувствиехорошеенастроениебодроекдальнейшейработеготов'):
-        print('53.Dolozhili_pravilno')
+        v = ('53.Dolozhili_pravilno.mp4')
     elif a==('исходноеположениедлярегистрациифизиологическихфункцийзанял'):
-        print('54.Fiziologicheskih_funkcii')
+        v = ('54.Fiziologicheskih_funkcii.mp4')
     elif a==('васпонялбудутотводитьустановщик'):
-        print('55.Ustanovshik')
+        v = ('55.Ustanovshik.mp4')
     elif a==('понялвасстрелаустановщикаотошланормально'):
-        print('56.Strela_ustanovshika')
+        v = ('56.Strela_ustanovshika.mp4')
     elif a==('понялвассейчассостартапереходятвбункерминутныйперерывзатемпередачубудетеосуществлятьчерезних'):
-        print('57.Bunker')
+        v = ('57.Bunker.mp4')
     elif a==('тожевсёпревосходнокакподанныммедицинысердцебьется'):
-        print('58.Medicina')
+        v = ('58.Medicina.mp4')
     elif a==('понялзначитсердцебьётсякакаясейчасготовность'):
-        print('59.Serdce_betsya')
+        v = ('59.Serdce_betsya.mp4')
     elif a==('васпонял15минутнаяготовностьодетьперчаткивыполняюперчаткиоделвсёнормально'):
-        print('60.Perchatki_odel')
+        v = ('60.Perchatki_odel.mp4')
     elif a==('магнитофоннаавтоматическуюиручнуюзаписьнеработаеточевиднокончиласьплёнкапрошуперемотать'):
-        print('61.Magnitofon')
+        v = ('61.Magnitofon.mp4')
     elif a==('понялвасидётперемоткапустьперемотаютвсюпленку'):
-        print('62.Idet_peremotka')
+        v = ('62.Idet_peremotka.mp4')
     elif a==('васпонялобъявлена10минутнаяготовностьгермошлемзакрылвсёнормальносамочувствиехорошеекстартуготов'):
-        print('63.Germoshlem')
+        v = ('63.Germoshlem.mp4')
     elif a==('васпонялобъявлена5минутнаяготовностьпоставитьгромкостьнаполнуюполнуюгромкостьввёл'):
-        print('64.Gromkost')
+        v = ('64.Gromkost.mp4')
     elif a==('васпонялвсеидётнормальнозанятьисходноеположениедлярегистрациифизиологическихфункцийположениезанял'):
-        print('65.Polozhenie_zanayl')
+        v = ('65.Polozhenie_zanayl.mp4')
     elif a==('яслышувасхорошоваспонялдоначалаоперацииосталосьещёпарочкаминутсамочувствиехорошеенастроениебодроекстартуготоввсёнормально'):
-        print('66.Parochka_minut')
+        v = ('66.Parochka_minut.mp4')
     elif a==('васпонялминутнаяготовностьзанималисходноеположениезанялпоэтомунесколькозадержалсясответом'):
-        print('67.Minuta')
+        v = ('67.Minuta.mp4')
     elif not a == (''):
-        print('999.Vas_ne_ponyal')
+        v = ('999.Vas_ne_ponyal')
+    c = {
+        "video": v,
+        "n": z
+    }
+    z = z+1
+    b = json.dumps(c, indent=4)
+    with open("demo.json", "w") as outfile:
+        outfile.write(b)
+
+
+
