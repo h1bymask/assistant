@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+    <style>
+        video {
+            height: 100vh;
+            width: 100%;
+            object-fit: cover;
+            position: absolute;
+        }
+    </style>
+    <title>Gagarin Demo</title>
+</head>
+<body>
+    <video id="odd" controls src="samples/000.WAIT.mp4"></video>
+    <video id="even" controls style="display: none;"></video>
+    <script>
+        const request = new Request('demo.json');
+        let current_video = document.getElementById('odd');
+
+        for (let video of document.getElementsByTagName('video')) {
+            video.addEventListener('playing', playing, false);
+            video.addEventListener('ended', ended, false);
+            //video.requestFullscreen();  // denied
+        }
+
+        function playing(video_event) {
+            console.log('playing ' + video_event.target.id);
+            fetch(request).then((response) => {
+                if (!response.ok)
+                    throw new Error('HTTP status: ' + response.status);
+                return response.json();
+            }).then((json) => {
+                next_video(video_event.target).src = 'samples/' + json.video;
+                next_video(video_event.target).load();
+                console.log('loaded ' + next_video(video_event.target).id);
+            });
+        }
+
+        function ended(video_event) {
+            video_event.target.style.display = 'none';
+            console.log('ended ' + video_event.target.id + ', about to play ' + next_video(video_event.target).id);
+            next_video(video_event.target).style.display = 'block';
+            next_video(video_event.target).play();
+        }
+
+        function next_video(video_element) {
+            return document.getElementById(video_element.id === 'odd' ? 'even' : 'odd');
+        }
+    </script>
+</body>
+</html>
