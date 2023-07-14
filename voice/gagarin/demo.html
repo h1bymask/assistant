@@ -18,6 +18,7 @@
         const request = new Request('demo.json');
         let current_video = document.getElementById('odd');
         let current_video_src = current_video.src;
+        let current_video_n = -1;
 
         for (let video of document.getElementsByTagName('video')) {
             video.addEventListener('playing', playing, false);
@@ -35,9 +36,12 @@
                 })
                 .then((json) => {
                     const next_video_src = 'samples/' + json.video;
-                    if (next_video_src !== current_video_src) {
+                    const next_video_n = json.n;
+                    current_video_n = json.n;
+                    if (next_video_src !== current_video_src || next_video_n !== current_video_n)  {
                         next_video(video_event.target).src = next_video_src;
                         current_video_src = next_video_src;
+                        current_video_n =  next_video_n;        
                     }
                     else
                         next_video(video_event.target).src = "samples/000.WAIT.mp4";
