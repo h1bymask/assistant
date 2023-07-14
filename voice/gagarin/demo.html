@@ -39,6 +39,8 @@
                         next_video(video_event.target).src = next_video_src;
                         current_video_src = next_video_src;
                     }
+                    else
+                        next_video(video_event.target).src = "samples/000.WAIT.mp4";
                     next_video(video_event.target).load();
                     console.log('loaded ' + next_video(video_event.target).id);
                 })
