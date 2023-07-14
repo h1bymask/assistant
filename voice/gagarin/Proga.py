@@ -1,11 +1,11 @@
 import sys
 for a in sys.stdin:
-    punc = '''!()-—[] {};:'"\,<>./?@#$%^&*_№~«»'''
+    punc = '''!()-—[] {};:'"\,<>./?@#$%^&*_№~«»\n\r'''
     for ele in a:
         if ele in punc:
             a = a.replace(ele, "")
     a = a.lower()
-    print(a)
+    #print(a)
     if a==('васслышухорошо'):
         print('1.Vas_slishu_horosho')
     elif a==('васпонялприступатькпроверкескафандрачерез3минутысейчасзанят'):
@@ -142,7 +142,5 @@ for a in sys.stdin:
         print('66.Parochka_minut')
     elif a==('васпонялминутнаяготовностьзанималисходноеположениезанялпоэтомунесколькозадержалсясответом'):
         print('67.Minuta')
-    elif a==(''):
-        # ничего не выводить
-    else:
+    elif not a == (''):
         print('999.Vas_ne_ponyal')
