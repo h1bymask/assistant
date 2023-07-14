@@ -17,7 +17,7 @@
     <script>
         const request = new Request('demo.json');
         let current_video = document.getElementById('odd');
-        let current_video_src = current_video.src;
+        let previous_json = {};
 
         for (let video of document.getElementsByTagName('video')) {
             video.addEventListener('playing', playing, false);
@@ -27,24 +27,18 @@
 
         function playing(video_event) {
             console.log('playing ' + video_event.target.id);
-            fetch(request)
-                .then((response) => {
-                    if (!response.ok)
-                        throw new Error('HTTP status: ' + response.status);
-                    return response.json();
-                })
-                .then((json) => {
-                    const next_video_src = 'samples/' + json.video;
-                    if (next_video_src !== current_video_src) {
-                        next_video(video_event.target).src = next_video_src;
-                        current_video_src = next_video_src;
-                    }
+            fetch(request).then((response) => {
+                if (!response.ok)
+                    throw new Error('HTTP status: ' + response.status);
+                return response.json();
+            }).then((json) => {
+                if (JSON.stringify(json) !== JSON.stringify(previous_json)) {
+                    next_video(video_event.target).src = 'samples/' + json.video;
                     next_video(video_event.target).load();
                     console.log('loaded ' + next_video(video_event.target).id);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+                    previous_json = JSON.parse(JSON.stringify(json));
+                }
+            });
         }
 
         function ended(video_event) {
