@@ -7,6 +7,7 @@ from torch.utils.data import DataLoader
 import torch
 from torch.nn.functional import softmax
 import pickle
+from sys import stdin, stdout, stderr
 
 
 # Все знаки должны стоять отдельно друг от друга !!!
@@ -160,16 +161,16 @@ frase_array = [('Как слышите меня ? ','Вас слышу хоро�
 # Загрузка:
 # 1) Для детекта эмоций
 emotion_labels = ['Без эмоций', 'Радость', 'Грусть', 'Удивление', 'Страх', 'Гнев']
-model = BertForSequenceClassification.from_pretrained('C:/Users/eliza/Рабочий стол/Курсовая работа/Курсовая_код/model_weight_2')
+model = BertForSequenceClassification.from_pretrained('model_weight_2')  #C:/Users/eliza/Рабочий стол/Курсовая работа/Курсовая_код/model_weight_2')
 tokenizer = AutoTokenizer.from_pretrained('cointegrated/rubert-tiny2')
 model.eval()
 
 # 2)Загрузка выходных эмоций
-with open('C:/Users/eliza/Рабочий стол/Курсовая работа/Курсовая_код/phrase_emotion', 'rb') as fp:
+with open('phrase_emotion', 'rb') as fp:  #C:/Users/eliza/Рабочий стол/Курсовая работа/Курсовая_код/phrase_emotion', 'rb') as fp:
     output_emotion = pickle.load(fp)
 
 # 3) NLP
-navec = Navec.load('C:/Users/eliza/Рабочий стол/pythonProject/chatbot/navec_lib.tar')
+navec = Navec.load('navec_lib.tar')  #C:/Users/eliza/Рабочий стол/pythonProject/chatbot/navec_lib.tar')
 stop_words = stopwords.words('russian')
 marks = ['!', '.', '?', ',', '«', '»', '&', '#', '№',  '0', '-' , '1'
         ,'2', '3', '4', '5', '6', '7', '8', '9', '10', '15', '20', '50', '100', '150']
@@ -183,26 +184,32 @@ for text in frase_array:
     main_arr.append(phrase_emb)
 
 # Начало диалога
-print('Для завершения программы воспользуйтесь комбинацией клавиш:'
+stderr.write('Для завершения программы воспользуйтесь комбинацией клавиш:'
       '\n - Ctrl + F2 (Pycharm);'
-      '\n - Ctrl + С.')
+      '\n - Ctrl + С.\n')
 
-print('НАЧАЛО ДИАЛОГА')
-print('- Гагарин: \nКак слышите меня?')
-phrase1_input = input('- ЦУП: \n')
+stderr.write('НАЧАЛО ДИАЛОГА\n')
+stderr.write('- Гагарин: \nКак слышите меня?\n')
+stderr.write('- ЦУП: \n')
+phrase1_input = input()
+if not stdin.isatty():
+    stderr.write(f'{phrase1_input}\n')
 
 
 try:
     while True:
 
         # Определение эмоций
-        phrase_input = input(f' - ЦУП: \n ')
+        stderr.write('- ЦУП: \n')
+        phrase_input = input()
+        if not stdin.isatty():
+            stderr.write(f'{phrase_input}\n')
         tokens = tokenizer(phrase_input, return_tensors='pt')
         outputs = model(input_ids=tokens['input_ids'], token_type_ids=tokens['token_type_ids'],
                         attention_mask=tokens['attention_mask'])
         probs = softmax(outputs.logits, dim=1)
         max_val, max_idx = torch.max(probs, dim=1)
-        print(f' ({emotion_labels[max_idx.item()]})')
+        stderr.write(f' ({emotion_labels[max_idx.item()]})\n')
 
         # NLP
         phrase_input_emb = np.asarray([navec[word] for word in phrase_input.lower().split()
@@ -210,20 +217,32 @@ try:
         if phrase_input_emb.size != 0:
             phrase_input_emb = phrase_input_emb.mean(axis=0)
         else:
-            print('- Гагарин: \nВас не понял. (Без эмоций)')
+            stderr.write('- Гагарин: \n')
+            stdout.write('Вас не понял.')
+            if not stdin.isatty():
+                stderr.write('Вас не понял.')
+            stderr.write(' (Без эмоций)\n')
+            stdout.write('\n')
 
         # Поиск расстояния
         cosine_arr = [distance.cosine(phrase_emb, phrase_input_emb) for phrase_emb in main_arr]
         cosine_min = min(cosine_arr)
+        stderr.write('- Гагарин: \n')
         if cosine_min < 0.2:
             index = cosine_arr.index(cosine_min)
-            print(f'- Гагарин: \n{frase_array[index][1]} ({output_emotion[index]})')
+            stdout.write(f'{frase_array[index][1]}')
+            if not stdin.isatty():
+                stderr.write(f'{frase_array[index][1]}')
+            stderr.write(f' ({output_emotion[index]})\n')
+            stdout.write('\n')
         else:
-            print('- Гагарин: \nВас не понял. (Без эмоций)')
+            stdout.write('Вас не понял.')
+            stderr.write(' (Без эмоций)\n')
+            stdout.write('\n')
 
 
 except KeyboardInterrupt:
-    print('Программа завершена.')
+    stderr.write('Программа завершена.\n')
     exit()
 
 
