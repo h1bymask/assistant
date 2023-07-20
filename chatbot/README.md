@@ -16,7 +16,7 @@ Commands to run the emergency chatbot inference:<br/><br/>
 <code>venv/bin/python -m pip install navec stop_words scipy</code><br/>
 <code>wget https://storage.yandexcloud.net/natasha-navec/packs/navec_hudlit_v1_12B_500K_300d_100q.tar</code><br/>
 <code>ln -s navec_hudlit_v1_12B_500K_300d_100q.tar navec_lib.tar</code><br/>
-venv/bin/python inference.py<br/>
+<code>venv/bin/python inference.py</code><br/>
 <br/><br/><br/>
 Additional commands to run Gagarin demo chatbot:<br/><br/>
 <code>venv/bin/python -m pip install nltk transformers torch</code><br/>
