@@ -11,3 +11,16 @@ For start speech to text: python test_microphone.py --model=ru --device=1
 "-r", "--samplerate", type:int, sampling rate
 
 "-m", "--model", type:str, language model; e.g. en-us, fr, nl; default is en-us.
+
+<br/>
+$ `ln -s cache/vosk/*-ru-0.22 $HOME/.cache/vosk/` <br/> <br/>
+$ `python3 speechToText.py -d 0 -m ru` <br/>
+(Downloads the model to $HOME/.cache/vosk/vosk-model-small-ru-0.22) <br/>
+<br/>
+$ `python3 --version` <br/>
+Python 3.8.10 <br/>
+<br/>
+$ `pip freeze` <br/>
+vosk==0.3.45 <br/>
+sounddevice==0.4.6 <br/>
+SoundFile==0.10.3.post1 <br/>
