@@ -187,62 +187,72 @@ for text in frase_array:
 stderr.write('Для завершения программы воспользуйтесь комбинацией клавиш:'
       '\n - Ctrl + F2 (Pycharm);'
       '\n - Ctrl + С.\n')
+AF = '\033[2m'  # ANSI faint color output
+AR = '\033[0m'  # ANSI reset colot
 
-stderr.write('НАЧАЛО ДИАЛОГА\n')
-stderr.write('- Гагарин: \nКак слышите меня?\n')
-stderr.write('- ЦУП: \n')
+stderr.write( '\nНАЧАЛО ДИАЛОГА\n')
+stderr.write( '- Гагарин: Как слышите меня?\n')
+stderr.write(f'- ЦУП: {AF}[Слышу хорошо]{AR} ')
+stderr.flush()
 phrase1_input = input()
 if not stdin.isatty():
     stderr.write(f'{phrase1_input}\n')
 
 
+current_phrase = 0
 try:
     while True:
 
         # Определение эмоций
-        stderr.write('- ЦУП: \n')
+        stderr.write(f'\n- ЦУП: {AF}[{frase_array[current_phrase][0]}]{AR} ')
+        stderr.flush()
         phrase_input = input()
         if not stdin.isatty():
-            stderr.write(f'{phrase_input}\n')
+            stderr.write(f'{phrase_input}')
+            stderr.flush()
         tokens = tokenizer(phrase_input, return_tensors='pt')
         outputs = model(input_ids=tokens['input_ids'], token_type_ids=tokens['token_type_ids'],
                         attention_mask=tokens['attention_mask'])
         probs = softmax(outputs.logits, dim=1)
         max_val, max_idx = torch.max(probs, dim=1)
-        stderr.write(f' ({emotion_labels[max_idx.item()]})\n')
+        stderr.write(f' {AF}({emotion_labels[max_idx.item()]}){AR}\n')
 
         # NLP
         phrase_input_emb = np.asarray([navec[word] for word in phrase_input.lower().split()
                                  if (word in navec) and (word not in marks)])
         if phrase_input_emb.size != 0:
+            # Поиск расстояния
             phrase_input_emb = phrase_input_emb.mean(axis=0)
+            cosine_arr = [distance.cosine(phrase_emb, phrase_input_emb) for phrase_emb in main_arr]
+            cosine_min = min(cosine_arr)
+            stderr.write('- Гагарин: ')
+            stderr.flush()
+            if cosine_min < 0.2:
+                index = cosine_arr.index(cosine_min)
+                stdout.write(f'{frase_array[index][1]}')
+                if not stdin.isatty():
+                    stderr.write(f'{frase_array[index][1]}')
+                stderr.write(f' {AF}({output_emotion[index]}){AR}\n')
+                stdout.write('\n')
+                current_phrase += 1
+            else:
+                stdout.write('Вас не понял.')
+                if not stdin.isatty():
+                    stderr.write('Вас не понял.')
+                stderr.write(f' {AF}(Без эмоций){AR}\n')
+                stdout.write('\n')
         else:
-            stderr.write('- Гагарин: \n')
+            stderr.write('- Гагарин: ')
+            stderr.flush()
             stdout.write('Вас не понял.')
             if not stdin.isatty():
                 stderr.write('Вас не понял.')
-            stderr.write(' (Без эмоций)\n')
+            stderr.write(f' {AF}(Без эмоций){AR}\n')
             stdout.write('\n')
-
-        # Поиск расстояния
-        cosine_arr = [distance.cosine(phrase_emb, phrase_input_emb) for phrase_emb in main_arr]
-        cosine_min = min(cosine_arr)
-        stderr.write('- Гагарин: \n')
-        if cosine_min < 0.2:
-            index = cosine_arr.index(cosine_min)
-            stdout.write(f'{frase_array[index][1]}')
-            if not stdin.isatty():
-                stderr.write(f'{frase_array[index][1]}')
-            stderr.write(f' ({output_emotion[index]})\n')
-            stdout.write('\n')
-        else:
-            stdout.write('Вас не понял.')
-            stderr.write(' (Без эмоций)\n')
-            stdout.write('\n')
-
+
 
 except KeyboardInterrupt:
-    stderr.write('Программа завершена.\n')
+    stderr.write(f'\n\nПрограмма завершена.\n{AR}\n')
     exit()
 
 
