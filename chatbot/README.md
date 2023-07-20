@@ -17,7 +17,7 @@ Gagarin chat bot (BERT transformers, torch max &amp; softmax): Summer 2023<br/>
 <code>wget https://storage.yandexcloud.net/natasha-navec/packs/navec_hudlit_v1_12B_500K_300d_100q.tar</code><br/>
 <code>ln -s navec_hudlit_v1_12B_500K_300d_100q.tar navec_lib.tar</code><br/>
 <code>venv/bin/python inference.py</code><br/>
-<br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/>
 <span id="bert">Additional commands to run Gagarin demo chatbot:</span><br/><br/>
 <code>venv/bin/python -m pip install nltk transformers torch</code><br/>
 <i>Unpack <code>model_weight_2/pytorch_model.bin</code> from <code>Архив WinRAR.rar</code></i><br/>
