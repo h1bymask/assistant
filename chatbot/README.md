@@ -6,7 +6,7 @@ Gagarin chat bot (BERT transformers, torch max &amp; softmax): Summer 2023<br/>
 <br/>
 <hr/>
 <br/><br/>
-Commands to run the emergency chatbot inference:<br/><br/>
+<span>Commands to run the emergency chatbot inference:</span><br/><br/>
 <code>cd chatbot</code><br/>
 <code>python3 --version</code> &nbsp; <i># Works fine on 3.8.10</i><br/>
 <code>python3 -m venv venv/</code><br/>
@@ -18,7 +18,7 @@ Commands to run the emergency chatbot inference:<br/><br/>
 <code>ln -s navec_hudlit_v1_12B_500K_300d_100q.tar navec_lib.tar</code><br/>
 <code>venv/bin/python inference.py</code><br/>
 <br/><br/><br/>
-Additional commands to run Gagarin demo chatbot:<br/><br/>
+<span id="bert">Additional commands to run Gagarin demo chatbot:</span><br/><br/>
 <code>venv/bin/python -m pip install nltk transformers torch</code><br/>
 <i>Unpack <code>model_weight_2/pytorch_model.bin</code> from <code>Архив WinRAR.rar</code></i><br/>
 <code>echo -e "import nltk\nnltk.download('stopwords')" | venv/bin/python</code> &nbsp; <i># Gets downloaded to $HOME/nltk_data/corpora</i><br/>
