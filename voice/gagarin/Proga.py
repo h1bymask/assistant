@@ -147,6 +147,8 @@ for a in sys.stdin:
         v = ('67.Minuta.mp4')
     elif not a == (''):
         v = ('999.Vas_ne_ponyal.mp4')
+    else:
+        continue
     c = {
         "video": v,
         "n": z
