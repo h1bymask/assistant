@@ -7,3 +7,10 @@ wandb
 test_data
 venv
 test.ipynb
+test.py
+tone.wav
+cache
+pytorch_model.bin
+navec_hudlit_v1_12B_500K_300d_100q.tar
+demo.json
+NLP_LSTM_chat_bot_Tensorflow_course.ipynb
