@@ -25,3 +25,35 @@ Gagarin chat bot (BERT transformers, torch max &amp; softmax): Summer 2023<br/>
 <code>mkdir --parents venv/nltk_data/corpora</code><br/>
 <code>mv $HOME/nltk_data/corpora/stopwords* venv/nltk_data/corpora</code><br/>
 <code>venv/bin/python gagarin_chatbot_inference.py</code></br>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
